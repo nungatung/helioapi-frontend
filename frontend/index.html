@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFE2CJWCM4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TFE2CJWCM4');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelioAPI - Global Solar CO2 Reduction API</title>
+    <meta name="description" content="Calculate environmental impact in real-time with verified emission factors from 86 countries across 5 continents.">
+    
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'helio-orange': '#FF8C42',
+                        'helio-teal': '#4FB3BF',
+                        'helio-lime': '#9FD356',
+                        'helio-navy': '#1A3A52',
+                        'helio-dark': '#0F2537',
+                        'helio-light-teal': '#6EC4CF',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0F2537 0%, #1A3A52 50%, #2C5F7C 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(79, 179, 191, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FF8C42 0%, #4FB3BF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navbar Styling */
+        nav {
+            transition: all 0.5s ease;
+            background: linear-gradient(135deg, #0F2537 0%, #1A3A52 50%, #2C5F7C 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.5s ease;
+        }
+
+        nav.scrolled a {
+            color: #4B5563;
+        }
+
+        
+
+        nav .cta-button {
+            background: #FF8C42;
+            color: white;
+        }
+
+        nav a:hover:not(.cta-button) {
+        color: #4FB3BF;
+        }
+
+        nav .cta-button:hover {
+        background: #FF8C42;
+        opacity: 0.9;
+        }
+
+        nav.scrolled .cta-button {
+            background: #FF8C42;
+            color: white;
+        }
+
+        nav .mobile-menu-button {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        nav.scrolled .mobile-menu-button {
+            color: #4B5563;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+<nav id="navbar" class="sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center items-center h-20">
+            <!-- Logo -->
+            
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#code-examples" class="transition font-medium">Quick Integration</a>
+                <a href="#features" class="transition font-medium">Features</a>
+                <a href="#demo" class="transition font-medium">Live Demo</a>
+                <a href="#tiers" class="transition font-medium">Tiers</a>
+                <a href="about.html" class="transition font-medium">About HelioAPI</a>
+                <a href="about.html#coverage"
+                   class="cta-button px-6 py-2.5 rounded-lg hover:bg-opacity-90 transition font-semibold shadow-md">
+                    What We Cover
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden mobile-menu-button" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+            <div class="flex flex-col space-y-3">
+                <a href="#code-examples" class="transition font-medium">Quick Integration</a>
+                <a href="#features" class="transition font-medium">Features</a>
+                <a href="#demo" class="transition font-medium">Live Demo</a>
+                <a href="#tiers" class="transition font-medium">Tiers</a>
+                <a href="about.html" class="transition font-medium">About HelioAPI</a>
+                <a href="about.html#coverage"
+                   class="cta-button px-6 py-2.5 rounded-lg hover:bg-opacity-90 transition font-semibold shadow-md">
+                    What We Cover
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Global Solar CO2 Reduction API
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Calculate environmental impact in real-time with verified emission factors with our
+                    <span class="text-helio-lime font-semibold">REST API</span>
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Access%20Request" 
+                       class="bg-helio-orange text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 transition shadow-lg">
+                        Request API Access
+                    </a>
+                    <a href="#demo" 
+                       class="bg-white text-helio-navy px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition shadow-lg">
+                        Try Live Demo
+                    </a>
+                </div>
+                
+                <!-- Live Stats -->
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-4 gap-8" id="hero-stats">
+                    <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-6">
+                        <div class="stat-number" id="stat-continents">5</div>
+                        <div class="text-gray-300 text-sm uppercase tracking-wide">Continents</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-6">
+                        <div class="stat-number" id="stat-countries">88</div>
+                        <div class="text-gray-300 text-sm uppercase tracking-wide">Countries</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-6">
+                        <div class="stat-number" id="stat-records">156</div>
+                        <div class="text-gray-300 text-sm uppercase tracking-wide">Regional Records</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur rounded-lg p-6">
+                        <div class="text-2xl font-bold text-helio-lime" id="stat-range">Loading...</div>
+                        <div class="text-gray-300 text-sm uppercase tracking-wide">Factor Range</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white fade-in-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Why HelioAPI?
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Everything you need to calculate and showcase the environmental impact of solar energy
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-white border-2 border-helio-teal border-opacity-20 rounded-xl p-6">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h3 class="text-xl font-bold text-helio-navy mb-3">Global Coverage</h3>
+                    <p class="text-gray-600">
+                        <span class="font-semibold text-helio-teal">88 countries</span>, 
+                        <span class="font-semibold text-helio-teal">156 regional emission factors</span> 
+                        across 5 continents
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card-hover bg-white border-2 border-helio-teal border-opacity-20 rounded-xl p-6">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold text-helio-navy mb-3">Real-Time Calculations</h3>
+                    <p class="text-gray-600">
+                        Instant CO2 reduction calculations with equivalents such as, trees planted, miles avoided, and carbon credit values
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card-hover bg-white border-2 border-helio-teal border-opacity-20 rounded-xl p-6">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-helio-navy mb-3">Enterprise Ready</h3>
+                    <p class="text-gray-600">
+                        99.9% uptime SLA, Redis caching, intelligent rate limiting, and scalable infrastructure
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="card-hover bg-white border-2 border-helio-teal border-opacity-20 rounded-xl p-6">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-xl font-bold text-helio-navy mb-3">Verified Data</h3>
+                    <p class="text-gray-600">
+                        Sourced from EPA eGRID, EEA/Ember, OWID, and national grid operators worldwide
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+<section id="demo" class="py-20 bg-gray-50 fade-in-section">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                Try It Live
+            </h2>
+            <p class="text-xl text-gray-600">
+                Calculate CO2 savings from Australasia - no API key required
+            </p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-helio-teal border-opacity-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Country</label>
+                    <select id="demo-country" onchange="updateRegions()" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-teal focus:outline-none">
+                        <option value="australia">Australia</option>
+                        <option value="new zealand">New Zealand</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Region</label>
+                    <select id="demo-region" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-teal focus:outline-none">
+                        <option value="nsw">New South Wales (NSW)</option>
+                        <option value="vic">Victoria (VIC)</option>
+                        <option value="qld">Queensland (QLD)</option>
+                        <option value="sa">South Australia (SA)</option>
+                        <option value="wa">Western Australia (WA)</option>
+                        <option value="tas">Tasmania (TAS)</option>
+                        <option value="nt">Northern Territory (NT)</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">kWh Generated</label>
+                    <input type="number" id="demo-kwh" value="100" 
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-teal focus:outline-none">
+                </div>
+            </div>
+            
+            <button onclick="calculateImpact()" 
+                    class="w-full bg-helio-orange text-white py-4 rounded-lg font-semibold text-lg hover:bg-opacity-90 transition">
+                Calculate Impact
+            </button>
+            
+            <div id="demo-results" class="hidden mt-8">
+                <div class="bg-white border-2 border-helio-teal border-opacity-30 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-bold text-helio-navy mb-4">Environmental Impact</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">💨</span>
+                            <div>
+                                <div class="text-sm text-gray-600">CO2 Avoided</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-co2">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🌳</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Trees Planted</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-trees">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🚗</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Miles Avoided</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-miles">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">💰</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Carbon Credit Value</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-value">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data source info -->
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <p class="text-xs text-gray-500" id="result-source">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- API Tiers Section -->
+    <section id="tiers" class="py-20 bg-white fade-in-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Choose Your Tier
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Flexible pricing for manufacturers of all sizes
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Tier -->
+                <div class="card-hover bg-white border-2 border-helio-teal border-opacity-30 rounded-2xl p-8">
+                    <div class="text-helio-lime text-sm font-semibold uppercase tracking-wide mb-2">Starter</div>
+                    <h3 class="text-2xl font-bold text-helio-navy mb-4">Perfect for small manufacturers</h3>
+                    
+                    <ul class="space-y-3 mb-8 text-gray-600">
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Real-time CO2 calculations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Basic impact translations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Monthly summaries</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Access to all 156 records</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>120 req/min rate limit</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Starter%20Tier%20Inquiry" 
+                       class="block w-full text-center bg-helio-teal text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
+                        Contact for Pricing
+                    </a>
+                </div>
+                
+                <!-- Professional Tier -->
+                <div class="card-hover bg-gradient-to-br from-helio-navy to-helio-teal text-white rounded-2xl p-8 relative transform md:scale-105 shadow-2xl">
+                    <div class="absolute top-0 right-0 bg-helio-orange text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl">
+                        POPULAR
+                    </div>
+                    <div class="text-helio-lime text-sm font-semibold uppercase tracking-wide mb-2">Professional</div>
+                    <h3 class="text-2xl font-bold mb-4">For growing businesses</h3>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Everything in Starter</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Carbon credit values</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>ROI calculations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>Quarterly reports</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>180 req/min rate limit</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Professional%20Tier%20Inquiry" 
+                       class="block w-full text-center bg-white text-helio-navy py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                        Contact for Pricing
+                    </a>
+                </div>
+                
+                <!-- Enterprise Tier -->
+                <div class="card-hover bg-white border-2 border-helio-orange border-opacity-30 rounded-2xl p-8">
+                    <div class="text-helio-orange text-sm font-semibold uppercase tracking-wide mb-2">Enterprise</div>
+                    <h3 class="text-2xl font-bold text-helio-navy mb-4">For large-scale operations</h3>
+                    
+                    <ul class="space-y-3 mb-8 text-gray-600">
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>Everything in Professional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>Annual audit reports</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>99.9% uptime SLA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>Custom regional datasets</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-orange mr-2">✓</span>
+                            <span>250 req/min rate limit</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Enterprise%20Tier%20Inquiry" 
+                       class="block w-full text-center bg-helio-orange text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
+                        Contact for Pricing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                 
+
+    <!-- Code Examples Section -->
+    <section id="code-examples" class="py-20 bg-white fade-in-section">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Quick Integration
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Get started in minutes with your favorite language
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Python Example -->
+                <div class="bg-gray-900 rounded-xl p-6 overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-helio-lime font-semibold">Python</span>
+                        <button onclick="copyCode('python-code')" class="text-gray-400 hover:text-white transition text-sm">
+                            Copy
+                        </button>
+                    </div>
+                    <pre class="text-sm text-gray-300 overflow-x-auto"><code id="python-code">import requests
+
+response = requests.post(
+    "https://helioapi-production.up.railway.app/calculate-co2-reduction",
+    headers={
+        "Authorization": f"Bearer {API_KEY}"
+    },
+    json={
+        "country": "australia",
+        "region": "nsw",
+        "kwh_generated": 5000
+    }
+)
+
+print(response.json())</code></pre>
+                </div>
+                
+                <!-- JavaScript Example -->
+                <div class="bg-gray-900 rounded-xl p-6 overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-helio-lime font-semibold">JavaScript</span>
+                        <button onclick="copyCode('js-code')" class="text-gray-400 hover:text-white transition text-sm">
+                            Copy
+                        </button>
+                    </div>
+                    <pre class="text-sm text-gray-300 overflow-x-auto"><code id="js-code">const response = await fetch(
+  'https://helioapi-production.up.railway.app/calculate-co2-reduction',
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      country: 'australia',
+      region: 'nsw',
+      kwh_generated: 5000
+    })
+  }
+);
+
+const data = await response.json();</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Get Started?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Get in touch to request your API access and start calculating your CO2 reductions today.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Access%20Request" 
+                   class="bg-helio-orange text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 transition inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    shalum@helioapi.com
+                </a>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-helio-dark text-gray-400 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Logo & Tagline -->
+            <div>
+                <div class="flex justify-center md:justify-start mb-8">
+                    <img src="logo1-2.png" alt="HelioAPI" class="h-16 md:h-20 w-auto">
+                </div>
+                <p class="text-sm text-center md:text-left">
+                    Global Solar CO2 Reduction API for manufacturers worldwide
+                </p>
+            </div>
+            
+            <!-- Trusted Data Sources -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Trusted Data Sources</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>EPA eGRID (USA)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>EEA/Ember (Europe)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Ministry for the Environment/DCCEEW (AU/NZ)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>ECCC NIR (Canada)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>OWID/Ember/DFFE (Asia/Africa)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Stats -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Live API Stats</h3>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-sm">Uptime (90 days)</span>
+                            <span class="text-helio-lime font-bold">99.9%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-helio-lime h-2 rounded-full" style="width: 99.9%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-sm">Avg Response Time</span>
+                            <span class="text-helio-teal font-bold">87ms</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-helio-teal h-2 rounded-full" style="width: 87%"></div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-4">
+                        <a href="https://helioapi-production.up.railway.app/health" target="_blank" class="text-helio-lime hover:text-helio-teal transition flex items-center">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                            API Status: Operational
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
+            <p>&copy; 2025 HelioAPI. All rights reserved.<br> Soli Deo gloria.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- JavaScript -->
+<script>
+    
+    // Region data for countries
+    const regionData = {
+        australia: [
+            { value: 'new_south_wales', label: 'New South Wales (NSW)' },
+            { value: 'victoria', label: 'Victoria (VIC)' },
+            { value: 'queensland', label: 'Queensland (QLD)' },
+            { value: 'south_australia', label: 'South Australia (SA)' },
+            { value: 'western_australia___swis', label: 'Western Australia - SWIS (WA)' },  // Note: double underscore!
+            { value: 'tasmania', label: 'Tasmania (TAS)' },
+            { value: 'northern_territory', label: 'Northern Territory (NT)' }
+        ],
+        'new zealand': [ 
+            { value: 'national', label: 'National Grid' }
+        ]
+    };
+
+    // Update regions dropdown
+    function updateRegions() {
+        const country = document.getElementById('demo-country').value;
+        const regionSelect = document.getElementById('demo-region');
+        const regions = regionData[country] || [];
+        
+        regionSelect.innerHTML = '';
+        regions.forEach(region => {
+            const option = document.createElement('option');
+            option.value = region.value;
+            option.textContent = region.label;
+            regionSelect.appendChild(option);
+        });
+        
+        // Hide results when switching countries
+        document.getElementById('demo-results').classList.add('hidden');
+    }
+
+    // Calculate impact with validation
+    async function calculateImpact() {
+        const country = document.getElementById('demo-country').value;
+        const region = document.getElementById('demo-region').value;
+        const kwh = parseFloat(document.getElementById('demo-kwh').value);
+        
+        // Validation
+        if (!country || !region) {
+            alert('Please select a country and region');
+            return;
+        }
+        
+        if (!kwh || kwh <= 0) {
+            alert('Please enter a valid kWh value');
+            return;
+        }
+        
+        console.log('🔍 Request:', { country, region, kwh }); // Debug
+        
+        // Show loading state
+        const button = document.querySelector('button[onclick="calculateImpact()"]');
+        const originalText = button.textContent;
+        button.textContent = 'Calculating...';
+        button.disabled = true;
+        
+        try {
+            const response = await fetch('https://helioapi-production.up.railway.app/calculate-co2-reduction', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer sk_helio_36urjsx63m75ycl2ehakazndqsff0ex3',
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache'
+                },
+                body: JSON.stringify({
+                    country: country,
+                    region: region,
+                    kwh_generated: kwh
+                })
+            });
+            
+            const data = await response.json();
+            
+            console.log('✅ Response:', data); // Debug
+            
+            if (data.success) {
+                document.getElementById('result-co2').textContent = 
+                    `${data.co2_results.co2_reduction_kg.toLocaleString()} kg/year`;
+                document.getElementById('result-trees').textContent = 
+                    `${Math.round(data.impact_equivalents.trees_planted_equivalent).toLocaleString()} trees`;
+                document.getElementById('result-miles').textContent = 
+                    `${Math.round(data.impact_equivalents.miles_driving_avoided).toLocaleString()} miles`;
+                document.getElementById('result-value').textContent = 
+                    `$${data.carbon_credit_value.low_estimate_usd} - $${data.carbon_credit_value.high_estimate_usd}`;
+                document.getElementById('result-source').textContent = 
+                    `Data: ${data.input_data.source} (${data.input_data.data_year}) • Emission Factor: ${data.input_data.emission_factor_used} kg CO2e/kWh`;
+                
+                document.getElementById('demo-results').classList.remove('hidden');
+                document.getElementById('demo-results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                console.error('❌ API Error:', data);
+                alert(`Error: ${data.error || 'Could not calculate impact. Please try again.'}`);
+            }
+        } catch (error) {
+            console.error('❌ Request Failed:', error);
+            alert('Network error. Please check your connection and try again.');
+        } finally {
+            // Restore button state
+            button.textContent = originalText;
+            button.disabled = false;
+        }
+    }
+
+
+    // Load live stats from API
+    async function loadStats() {
+        try {
+            const response = await fetch('https://helioapi-production.up.railway.app/');
+            const data = await response.json();
+            
+            if (data.global_coverage) {
+                document.getElementById('stat-continents').textContent = data.global_coverage.continents || 5;
+                document.getElementById('stat-countries').textContent = data.global_coverage.countries || 88;
+                document.getElementById('stat-records').textContent = data.global_coverage.total_records || 156;
+                document.getElementById('stat-range').textContent = data.global_coverage.factor_range || 'Loading...';
+            }
+        } catch (error) {
+            console.error('Error loading stats:', error);
+        }
+    }
+    
+    // Copy code
+    function copyCode(elementId) {
+        const code = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Code copied to clipboard!');
+        });
+    }
+    
+    // Mobile menu
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Navbar scroll effect
+    function handleNavbarScroll() {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 70) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }
+    
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                }
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Fade-in animations
+        function setupScrollAnimations() {
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+    
+    // Initialize on page load
+    window.addEventListener('load', () => {
+        updateRegions();
+        loadStats();
+        setupScrollAnimations();
+        handleNavbarScroll(); // Check initial state
+    });
+
+    // Handle scroll events
+    window.addEventListener('scroll', handleNavbarScroll);
+</script>
+
+</body>
+</html>
