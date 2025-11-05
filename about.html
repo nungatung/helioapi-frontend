@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFE2CJWCM4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TFE2CJWCM4');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About HelioAPI - Global Solar CO2 Reduction API</title>
+    <meta name="description" content="Learn about HelioAPI's mission to make solar environmental impact transparent and measurable across 88 countries and 156 regions worldwide.">
+    
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'helio-orange': '#FF8C42',
+                        'helio-teal': '#4FB3BF',
+                        'helio-lime': '#9FD356',
+                        'helio-navy': '#1A3A52',
+                        'helio-dark': '#0F2537',
+                        'helio-light-teal': '#6EC4CF',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0F2537 0%, #1A3A52 50%, #2C5F7C 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(79, 179, 191, 0.2);
+        }
+
+        /* Navbar Styling */
+        nav {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #0F2537 0%, #1A3A52 50%, #2C5F7C 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            transition: color 0.3s ease;
+        }
+
+        nav.scrolled a {
+            color: #4B5563;
+        }
+
+        
+        nav a:hover:not(.cta-button) {
+        color: #4FB3BF;
+        }
+
+        
+        nav .cta-button:hover {
+        background: #FF8C42;
+        opacity: 0.9;
+        }
+
+        nav .cta-button {
+            background: #FF8C42;
+            color: white;
+        }
+
+        nav.scrolled .cta-button {
+            background: #FF8C42;
+            color: white;
+        }
+
+        nav .mobile-menu-button {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        nav.scrolled .mobile-menu-button {
+            color: #4B5563;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center items-center h-20">
+                
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="transition font-medium">Home</a>
+                    <a href="#code-examples" class="transition font-medium">Quick Integration</a>
+                    <a href="#features" class="transition font-medium">Features</a>
+                    <a href="#demo" class="transition font-medium">Live Demo</a>
+                    <a href="#tiers" class="transition font-medium">Tiers</a>
+                    <a href="about.html" class="transition font-medium">About HelioAPI</a>
+                    <a href="about.html#coverage"
+                    class="cta-button px-6 py-2.5 rounded-lg hover:bg-opacity-90 transition font-semibold shadow-md">
+                        What We Cover
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden mobile-menu-button" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="index.html" class="transition font-medium">Home</a>
+                    <a href="#code-examples" class="transition font-medium">Quick Integration</a>
+                    <a href="#features" class="transition font-medium">Features</a>
+                    <a href="#demo" class="transition font-medium">Live Demo</a>
+                    <a href="#tiers" class="transition font-medium">Tiers</a>
+                    <a href="about.html" class="transition font-medium">About HelioAPI</a>
+                    <a href="about.html#coverage"
+                    class="cta-button px-6 py-2.5 rounded-lg hover:bg-opacity-90 transition font-semibold shadow-md">
+                        What We Cover
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 md:py-32">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                About HelioAPI
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                Making solar environmental impact transparent, measurable, and meaningful for 
+                <span class="text-helio-lime font-semibold">every solar installation worldwide</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white fade-in-section">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Our Mission
+                </h2>
+            </div>
+            
+            <div class="prose prose-lg max-w-none">
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    Every solar panel installed makes a difference. Whether it's a residential, commercial or industrial system, 
+                    each kilowatt-hour generated reduces our reliance on fossil fuels and cuts carbon emissions.
+                </p>
+                
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    But here's the challenge: <strong class="text-helio-navy">how much of a difference does it actually make?</strong>
+                </p>
+                
+                <p class="text-xl text-gray-700 leading-relaxed mb-6">
+                    The answer depends entirely on where you are. A solar system in coal-dependent Poland offsets far more CO2 than 
+                    the same panel in hydropower-rich Norway. Context matters—and that's where HelioAPI comes in.
+                </p>
+
+                <div class="bg-helio-teal bg-opacity-10 border-l-4 border-helio-teal p-6 my-8 rounded-r-lg">
+                    <p class="text-lg text-gray-800 font-medium italic">
+                        "We believe every solar user from homeowners to manufacturers deserve to know their precise environmental 
+                        impact based on their location's unique energy grid. HelioAPI makes that possible."
+                    </p>
+                </div>
+
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    HelioAPI provides inverter manufacturers, installers, and developers with accurate, region-specific emission factors 
+                    and impact calculations. We turn raw energy data into meaningful impact equivalents that customers understand such as trees planted, 
+                    miles avoided and homes powered.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Coverage Section -->
+    <section id="coverage" class="py-20 bg-gray-50 fade-in-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Truly Global Coverage
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Verified emission factors from every major market worldwide
+                </p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white rounded-xl p-8 shadow-lg text-center card-hover">
+                    <div class="text-5xl font-bold text-helio-teal mb-2">5</div>
+                    <div class="text-gray-600 text-lg">Continents</div>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-lg text-center card-hover">
+                    <div class="text-5xl font-bold text-helio-lime mb-2">88</div>
+                    <div class="text-gray-600 text-lg">Countries</div>
+                </div>
+                <div class="bg-white rounded-xl p-8 shadow-lg text-center card-hover">
+                    <div class="text-5xl font-bold text-helio-orange mb-2">156</div>
+                    <div class="text-gray-600 text-lg">Regional Records</div>
+                </div>
+            </div>
+
+            <!-- Regional Breakdown -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-helio-teal border-opacity-20">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                    <!-- North America -->
+                    <div class="text-center p-4 bg-gray-50 rounded-lg hover:bg-helio-teal hover:bg-opacity-10 transition cursor-pointer">
+                        <div class="text-3xl mb-2">🌎</div>
+                        <div class="font-bold text-helio-navy">North America</div>
+                        <div class="text-sm text-gray-600 mt-1">USA & Canada</div>
+                        <div class="text-xs text-helio-teal font-semibold mt-2">61 regions</div>
+                        <div class="text-xs text-gray-500 mt-1">EPA eGRID, ECCC NIR</div>
+                    </div>
+
+                    <!-- Europe -->
+                    <div class="text-center p-4 bg-gray-50 rounded-lg hover:bg-helio-teal hover:bg-opacity-10 transition cursor-pointer">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <div class="font-bold text-helio-navy">Europe</div>
+                        <div class="text-sm text-gray-600 mt-1">EU27 + UK, Norway</div>
+                        <div class="text-xs text-helio-teal font-semibold mt-2">34 countries</div>
+                        <div class="text-xs text-gray-500 mt-1">EEA, Ember</div>
+                    </div>
+
+                    <!-- Asia -->
+                    <div class="text-center p-4 bg-gray-50 rounded-lg hover:bg-helio-teal hover:bg-opacity-10 transition cursor-pointer">
+                        <div class="text-3xl mb-2">🌏</div>
+                        <div class="font-bold text-helio-navy">Asia</div>
+                        <div class="text-sm text-gray-600 mt-1">Japan, Vietnam, South Korea </div>
+                        <div class="text-xs text-helio-teal font-semibold mt-2">23 countries</div>
+                        <div class="text-xs text-gray-500 mt-1">OWID, Ember</div>
+                    </div>
+
+                    <!-- Africa -->
+                    <div class="text-center p-4 bg-gray-50 rounded-lg hover:bg-helio-teal hover:bg-opacity-10 transition cursor-pointer">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <div class="font-bold text-helio-navy">Africa</div>
+                        <div class="text-sm text-gray-600 mt-1">South Africa, Kenya, Egypt</div>
+                        <div class="text-xs text-helio-teal font-semibold mt-2">25 countries</div>
+                        <div class="text-xs text-gray-500 mt-1">DFFE, OWID</div>
+                    </div>
+
+                    <!-- Oceania -->
+                    <div class="text-center p-4 bg-gray-50 rounded-lg hover:bg-helio-teal hover:bg-opacity-10 transition cursor-pointer">
+                        <div class="text-3xl mb-2">🌏</div>
+                        <div class="font-bold text-helio-navy">Oceania</div>
+                        <div class="text-sm text-gray-600 mt-1">Australia, NZ, Pacific Islands</div>
+                        <div class="text-xs text-helio-teal font-semibold mt-2">13 regions</div>
+                        <div class="text-xs text-gray-500 mt-1">Ministry for the Environment, DCCEEW</div>
+                    </div>
+                </div>
+
+                <!-- Pacific Islands Note -->
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-r-lg mb-6">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <div>
+                            <p class="text-sm text-blue-800 font-medium">Pacific Island Nations Coverage</p>
+                            <p class="text-xs text-blue-700 mt-1">
+                                Pacific Island nations coverage is limited due to lack of official government emissions factor data. 
+                                HelioAPI currently includes Fiji and Solomon Islands. We're monitoring for additional official data releases from regional authorities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlighted Countries -->
+                <div class="pt-6 border-t border-gray-200">
+                    <p class="text-center text-sm text-gray-500 mb-4 font-semibold">Major Markets Included:</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">USA (50 states)</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">Canada (11 provinces)</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full"> Australia (8 regions)</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">Germany</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">UK</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">China</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">India</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">Japan</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">South Africa</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">France</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">Ireland</span>
+                        <span class="px-3 py-1 bg-helio-navy bg-opacity-10 text-helio-navy text-xs font-medium rounded-full">+ 77 more</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- UN SDG Section -->
+    <section class="py-20 bg-white fade-in-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Contributing to Global Sustainability Goals
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Solar energy and HelioAPI directly support the UN Sustainable Development Goals
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- SDG 7: Affordable and Clean Energy -->
+                <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 text-white rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-3">⚡</div>
+                        <div>
+                            <div class="text-sm font-semibold opacity-90">SDG 7</div>
+                            <div class="font-bold text-lg">Affordable & Clean Energy</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90">
+                        Every solar installation tracked through HelioAPI contributes to the global transition to renewable energy. 
+                        By quantifying this impact, we make clean energy progress transparent and measurable.
+                    </p>
+                </div>
+
+                <!-- SDG 13: Climate Action -->
+                <div class="bg-gradient-to-br from-green-500 to-green-700 text-white rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-3">🌍</div>
+                        <div>
+                            <div class="text-sm font-semibold opacity-90">SDG 13</div>
+                            <div class="font-bold text-lg">Climate Action</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90">
+                        HelioAPI provides the data infrastructure for countries and organizations to accurately track their renewable 
+                        energy contributions to national emissions reduction targets and climate commitments.
+                    </p>
+                </div>
+
+                <!-- SDG 12: Responsible Consumption -->
+                <div class="bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-xl p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-3">♻️</div>
+                        <div>
+                            <div class="text-sm font-semibold opacity-90">SDG 12</div>
+                            <div class="font-bold text-lg">Responsible Consumption</div>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-90">
+                        By making environmental impact visible and understandable, HelioAPI empowers consumers to make informed 
+                        decisions about their energy consumption and carbon footprint.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Every Installation Matters -->
+            <div class="bg-gradient-to-br from-helio-navy to-helio-teal text-white rounded-2xl p-8 md:p-12">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6">
+                        Every Solar Installation Contributes to National Emissions Reduction
+                    </h3>
+                    
+                    <p class="text-lg mb-6 opacity-90">
+                        No matter how small, every solar panel makes a measurable difference to a country's carbon footprint. 
+                        HelioAPI helps quantify this contribution in real, verifiable terms.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur">
+                            <div class="text-3xl font-bold text-helio-lime mb-2">Residential</div>
+                            <p class="text-sm opacity-90">
+                                Homeowners see exactly how their rooftop system reduces their country's grid emissions
+                            </p>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur">
+                            <div class="text-3xl font-bold text-helio-lime mb-2">Commercial</div>
+                            <p class="text-sm opacity-90">
+                                Businesses track their solar contribution to corporate sustainability and national climate goals
+                            </p>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-6 backdrop-blur">
+                            <div class="text-3xl font-bold text-helio-lime mb-2">Utility-Scale</div>
+                            <p class="text-sm opacity-90">
+                                Large solar farms quantify their impact on regional grid decarbonization efforts
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-white border-opacity-20">
+                        <p class="text-base italic opacity-90">
+                            "When a homeowner in Poland installs 5kW of solar, they offset 0.63 kg of CO2 per kWh produced, more than triple 
+                            the impact of the same system in France (0.05 kg). Context matters. Accurate data matters. HelioAPI provides both."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Methodology Section -->
+    <section class="py-20 bg-gray-50 fade-in-section">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-helio-navy mb-4">
+                    Our Data Methodology
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Transparency and accuracy are at the core of everything we do
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Sourcing -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 bg-helio-teal bg-opacity-20 rounded-lg flex items-center justify-center text-2xl mr-4">
+                            📥
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-helio-navy mb-3">Official Sources Only</h3>
+                            <p class="text-gray-700 mb-3">
+                                All emission factors come from government agencies, regulatory bodies, and international organizations:
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• <strong>USA:</strong> EPA eGRID (Environmental Protection Agency)</li>
+                                <li>• <strong>Canada:</strong> ECCC National Inventory Report</li>
+                                <li>• <strong>Europe:</strong> EEA (European Environment Agency), Ember</li>
+                                <li>• <strong>Australasia/Pacific Islands:</strong> Ministry for the Environment/DCCEEW</li>
+                                <li>• <strong>Asia/Africa:</strong> OWID, Ember, National Grid Operators</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verification -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 bg-helio-lime bg-opacity-20 rounded-lg flex items-center justify-center text-2xl mr-4">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-helio-navy mb-3">Cross-Verification</h3>
+                            <p class="text-gray-700">
+                                Where possible, we cross-reference emission factors across multiple authoritative sources to ensure 
+                                accuracy and identify any discrepancies in published data.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Updates -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 bg-helio-orange bg-opacity-20 rounded-lg flex items-center justify-center text-2xl mr-4">
+                            🔄
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-helio-navy mb-3">Regular Updates</h3>
+                            <p class="text-gray-700">
+                                Emission factors are updated annually as new government data is released. Our database tracks the source 
+                                year for each factor, ensuring you always know how current your calculations are.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transparency -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12 h-12 bg-helio-navy bg-opacity-20 rounded-lg flex items-center justify-center text-2xl mr-4">
+                            📖
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-helio-navy mb-3">Complete Transparency</h3>
+                            <p class="text-gray-700">
+                                Every API response includes the source, year, and emission factor used in calculations. You can trace 
+                                every number back to its authoritative origin.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Make Solar Impact Measurable?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Join solar manufacturers worldwide using HelioAPI to showcase their environmental contribution
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Access%20Request" 
+                   class="bg-helio-orange text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-opacity-90 transition inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Request API Access
+                </a>
+                <a href="index.html#demo" 
+                   class="bg-white text-helio-navy px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition">
+                    Try Live Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-helio-dark text-gray-400 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Logo & Tagline -->
+            <div>
+                <div class="flex justify-center md:justify-start mb-8">
+                    <img src="logo1-2.png" alt="HelioAPI" class="h-16 md:h-20 w-auto">
+                </div>
+                <p class="text-sm text-center md:text-left">
+                    Global Solar CO2 Reduction API for manufacturers worldwide
+                </p>
+            </div>
+            
+            <!-- Trusted Data Sources -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Trusted Data Sources</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>EPA eGRID (USA)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>EEA/Ember (Europe)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Ministry for the Environment/DCCEEW (AU/NZ)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>ECCC NIR (Canada)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>OWID/Ember/DFFE (Asia/Africa)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Stats -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Live API Stats</h3>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-sm">Uptime (90 days)</span>
+                            <span class="text-helio-lime font-bold">99.9%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-helio-lime h-2 rounded-full" style="width: 99.9%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-sm">Avg Response Time</span>
+                            <span class="text-helio-teal font-bold">87ms</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-helio-teal h-2 rounded-full" style="width: 87%"></div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-4">
+                        <a href="https://helioapi-production.up.railway.app/health" target="_blank" class="text-helio-lime hover:text-helio-teal transition flex items-center">
+                            <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                            API Status: Operational
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
+            <p>&copy; 2025 HelioAPI. All rights reserved.<br> Soli Deo gloria.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Fade-in animations
+        function setupScrollAnimations() {
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            setupScrollAnimations();
+            handleNavbarScroll();
+        });
+
+        window.addEventListener('scroll', handleNavbarScroll);
+    </script>
+
+</body>
+</html>
