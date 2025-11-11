@@ -253,9 +253,9 @@
                     <div class="text-4xl mb-4">🌍</div>
                     <h3 class="text-xl font-bold text-helio-navy mb-3">Global Coverage</h3>
                     <p class="text-gray-600">
-                        <span class="font-semibold text-helio-teal">88 countries</span>, 
-                        <span class="font-semibold text-helio-teal">156 regional emission factors</span> 
-                        across 5 continents
+                        <span class="font-semibold text-helio-teal">110 countries</span>, 
+                        <span class="font-semibold text-helio-teal">179 regional emission factors</span> 
+                        across 6 continents
                     </p>
                 </div>
                 
@@ -273,7 +273,7 @@
                     <div class="text-4xl mb-4">📊</div>
                     <h3 class="text-xl font-bold text-helio-navy mb-3">Enterprise Ready</h3>
                     <p class="text-gray-600">
-                        99.9% uptime SLA, Redis caching, intelligent rate limiting, and scalable infrastructure
+                        99.9% uptime SLA, Redis caching, intelligent rate limiting with burts limits to ensure fair use
                     </p>
                 </div>
                 
@@ -282,7 +282,7 @@
                     <div class="text-4xl mb-4">🔒</div>
                     <h3 class="text-xl font-bold text-helio-navy mb-3">Verified Data</h3>
                     <p class="text-gray-600">
-                        Sourced from EPA eGRID, EEA/Ember, OWID, and national grid operators worldwide
+                        Sourced from Ember, Our World In Data (OWID), and national grid operators worldwide
                     </p>
                 </div>
             </div>
@@ -318,7 +318,8 @@
                         <option value="vic">Victoria (VIC)</option>
                         <option value="qld">Queensland (QLD)</option>
                         <option value="sa">South Australia (SA)</option>
-                        <option value="wa">Western Australia (WA)</option>
+                        <option value="wa">Western Australia NWIS</option>
+                        <option value="wa">Western Australia SWIS</option>
                         <option value="tas">Tasmania (TAS)</option>
                         <option value="nt">Northern Territory (NT)</option>
                     </select>
@@ -627,13 +628,13 @@ const data = await response.json();</code></pre>
                         <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
-                        <span>EEA/Ember (Europe)</span>
+                        <span>Ember/OWID (Europe)</span>
                     </div>
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
-                        <span>Ministry for the Environment/DCCEEW (AU/NZ)</span>
+                        <span>Ember/OWID/DCCEEW (AU/NZ/Pacific Islands)</span>
                     </div>
                     <div class="flex items-center">
                         <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
@@ -645,7 +646,7 @@ const data = await response.json();</code></pre>
                         <svg class="w-4 h-4 mr-2 text-helio-teal" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
-                        <span>OWID/Ember/DFFE (Asia/Africa)</span>
+                        <span>Ember/OWID (Asia/Africa)</span>
                     </div>
                 </div>
             </div>
@@ -698,7 +699,8 @@ const data = await response.json();</code></pre>
             { value: 'victoria', label: 'Victoria (VIC)' },
             { value: 'queensland', label: 'Queensland (QLD)' },
             { value: 'south_australia', label: 'South Australia (SA)' },
-            { value: 'western_australia___swis', label: 'Western Australia - SWIS (WA)' },  // Note: double underscore!
+            { value: 'western_australia___north_western_interconnected_system_(nwis)_', label: 'Western Australia - NWIS (WA)' },
+            { value: 'western_australia___south_west_interconnected_system_(swis)_', label: 'Western Australia - SWIS (WA)' },
             { value: 'tasmania', label: 'Tasmania (TAS)' },
             { value: 'northern_territory', label: 'Northern Territory (NT)' }
         ],
@@ -891,5 +893,4 @@ const data = await response.json();</code></pre>
 </script>
 
 </body>
-
 </html>
