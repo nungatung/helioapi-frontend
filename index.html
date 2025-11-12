@@ -199,7 +199,7 @@
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
                     Calculate environmental impact in real-time with verified emission factors with our
-                    <span class="text-helio-lime font-semibold">REST API</span>
+                    <span class="text-helio-lime font-semibold">API</span>
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Access%20Request" 
@@ -356,10 +356,38 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
+                            <span class="text-2xl">✈️</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Flight Hours Avoided</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-passenger">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
                             <span class="text-2xl">🚗</span>
                             <div>
                                 <div class="text-sm text-gray-600">Miles Avoided</div>
                                 <div class="text-xl font-bold text-helio-navy" id="result-miles">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">♻️</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Plastic Bottles Avoided (500ml)</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-bottles">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">📱</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Smartphones Charged</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-phones">-</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">💻</span>
+                            <div>
+                                <div class="text-sm text-gray-600">Laptops Charged</div>
+                                <div class="text-xl font-bold text-helio-navy" id="result-laptops">-</div>
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
@@ -389,15 +417,15 @@
                     Choose Your Tier
                 </h2>
                 <p class="text-xl text-gray-600">
-                    Flexible pricing for manufacturers of all sizes
+                    Flexible pricing for inverter manufacturers and solar design tools
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <!-- Starter Tier -->
                 <div class="card-hover bg-white border-2 border-helio-teal border-opacity-30 rounded-2xl p-8">
                     <div class="text-helio-lime text-sm font-semibold uppercase tracking-wide mb-2">Starter</div>
-                    <h3 class="text-2xl font-bold text-helio-navy mb-4">Perfect for small manufacturers</h3>
+                    <h3 class="text-2xl font-bold text-helio-navy mb-4">Essential CO2 tracking for your platform</h3>
                     
                     <ul class="space-y-3 mb-8 text-gray-600">
                         <li class="flex items-start">
@@ -406,19 +434,19 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>Basic impact translations</span>
+                            <span>Impact equivalents</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>Monthly summaries</span>
+                            <span>99.9% uptime SLA</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>Access to all 156 records</span>
+                            <span>Access to all 179 records</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>120 req/min rate limit</span>
+                            <span>180 req/min rate limit</span>
                         </li>
                     </ul>
                     
@@ -434,7 +462,7 @@
                         POPULAR
                     </div>
                     <div class="text-helio-lime text-sm font-semibold uppercase tracking-wide mb-2">Professional</div>
-                    <h3 class="text-2xl font-bold mb-4">For growing businesses</h3>
+                    <h3 class="text-2xl font-bold mb-4">Advanced features for growing teams</h3>
                     
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-start">
@@ -447,58 +475,24 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>ROI calculations</span>
+                            <span>Priority support</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>Quarterly reports</span>
+                            <span>Quarterly & annual reports</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-helio-lime mr-2">✓</span>
-                            <span>180 req/min rate limit</span>
+                            <span>Custom regional datasets</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-helio-lime mr-2">✓</span>
+                            <span>250 req/min rate limit</span>
                         </li>
                     </ul>
                     
                     <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Professional%20Tier%20Inquiry" 
                        class="block w-full text-center bg-white text-helio-navy py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                        Contact for Pricing
-                    </a>
-                </div>
-                
-                <!-- Enterprise Tier -->
-                <div class="card-hover bg-white border-2 border-helio-orange border-opacity-30 rounded-2xl p-8">
-                    <div class="text-helio-orange text-sm font-semibold uppercase tracking-wide mb-2">Enterprise</div>
-                    <h3 class="text-2xl font-bold text-helio-navy mb-4">For large-scale operations</h3>
-                    
-                    <ul class="space-y-3 mb-8 text-gray-600">
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>Everything in Professional</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>Annual audit reports</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>Priority support</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>99.9% uptime SLA</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>Custom regional datasets</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-helio-orange mr-2">✓</span>
-                            <span>250 req/min rate limit</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="mailto:shalum@helioapi.com?subject=HelioAPI%20Enterprise%20Tier%20Inquiry" 
-                       class="block w-full text-center bg-helio-orange text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition">
                         Contact for Pricing
                     </a>
                 </div>
@@ -756,7 +750,7 @@ const data = await response.json();</code></pre>
             const response = await fetch('https://helioapi-production.up.railway.app/calculate-co2-reduction', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer sk_helio_36urjsx63m75ycl2ehakazndqsff0ex3',
+                    'Authorization': 'Bearer sk_helio_evalrioee3kju7f29plww9ghk35kpl72',
                     'Content-Type': 'application/json',
                     'Cache-Control': 'no-cache'
                 },
@@ -776,8 +770,16 @@ const data = await response.json();</code></pre>
                     `${data.co2_results.co2_reduction_kg.toLocaleString()} kg/year`;
                 document.getElementById('result-trees').textContent = 
                     `${Math.round(data.impact_equivalents.trees_planted_equivalent).toLocaleString()} trees`;
+                document.getElementById('result-passenger').textContent = 
+                    `${Math.round(data.impact_equivalents.passenger_flights_avoided).toLocaleString()} hours`;  
                 document.getElementById('result-miles').textContent = 
                     `${Math.round(data.impact_equivalents.miles_driving_avoided).toLocaleString()} miles`;
+                document.getElementById('result-bottles').textContent = 
+                    `${Math.round(data.impact_equivalents.plastic_bottles_avoided).toLocaleString()} bottles`;
+                document.getElementById('result-phones').textContent = 
+                    `${Math.round(data.impact_equivalents.smartphones_charged).toLocaleString()} phones`;
+                document.getElementById('result-laptops').textContent = 
+                    `${Math.round(data.impact_equivalents.laptop_hours_powered).toLocaleString()} laptops`;        
                 document.getElementById('result-value').textContent = 
                     `$${data.carbon_credit_value.low_estimate_usd} - $${data.carbon_credit_value.high_estimate_usd}`;
                 document.getElementById('result-source').textContent = 
