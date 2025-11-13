@@ -141,6 +141,166 @@
             transform: translateY(0);
         }
 
+        
+        /* Admin Modal Styles */
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .admin-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 37, 55, 0.85);
+            backdrop-filter: blur(8px);
+        }
+        
+        .admin-modal-content {
+            position: relative;
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            max-width: 440px;
+            width: 90%;
+            border: 2px solid rgba(79, 179, 191, 0.3);
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .admin-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 32px;
+            color: #9CA3AF;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .admin-modal-close:hover {
+            color: #1A3A52;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        
+        .admin-modal-title {
+            color: #1A3A52;
+            font-size: 1.875rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .admin-modal-subtitle {
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 0.875rem;
+        }
+        
+        .admin-form-group {
+            margin-bottom: 24px;
+        }
+        
+        .admin-form-group label {
+            display: block;
+            color: #1A3A52;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.875rem;
+        }
+        
+        .admin-form-group input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .admin-form-group input[type="password"]:focus {
+            outline: none;
+            border-color: #4FB3BF;
+        }
+        
+        .admin-login-btn {
+            width: 100%;
+            background: #FF8C42;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .admin-login-btn:hover {
+            background: #E67A2E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 140, 66, 0.3);
+        }
+        
+        .admin-login-btn:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .admin-error {
+            background: #FEE2E2;
+            border: 2px solid #EF4444;
+            color: #991B1B;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .admin-error.show {
+            display: block;
+        }
+
     </style>
 </head>
 <body class="bg-gray-50">
@@ -683,8 +843,41 @@ const data = await response.json();</code></pre>
     </div>
 </footer>
 
-    <!-- JavaScript -->
+<!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="admin-modal" style="display: none;">
+        <div class="admin-modal-overlay" onclick="closeAdminModal()"></div>
+        <div class="admin-modal-content">
+            <button class="admin-modal-close" onclick="closeAdminModal()"></button>
+            
+            
+            
+            <h2 class="admin-modal-title">Admin Login</h2>
+            <p class="admin-modal-subtitle">Enter your admin token for API key management</p>
+            
+            <div id="adminErrorMessage" class="admin-error"></div>
+            
+            <form id="adminLoginForm">
+                <div class="admin-form-group">
+                    <label for="adminToken">Admin Token</label>
+                    <input 
+                        type="password" 
+                        id="adminToken" 
+                        placeholder="Enter admin token" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+                
+                <button type="submit" class="admin-login-btn" id="adminLoginBtn">
+                    Access Dashboard
+                </button>
+            </form>
+        </div>
+    </div>    
+
+
 <script>
+    const API_BASE = 'https://helioapi-production.up.railway.app';
     
     // Region data for countries
     const regionData = {
@@ -738,7 +931,7 @@ const data = await response.json();</code></pre>
             return;
         }
         
-        console.log('🔍 Request:', { country, region, kwh }); // Debug
+        console.log('🔍 Request:', { country, region, kwh });
         
         // Show loading state
         const button = document.querySelector('button[onclick="calculateImpact()"]');
@@ -763,7 +956,7 @@ const data = await response.json();</code></pre>
             
             const data = await response.json();
             
-            console.log('✅ Response:', data); // Debug
+            console.log('✅ Response:', data);
             
             if (data.success) {
                 document.getElementById('result-co2').textContent = 
@@ -800,7 +993,6 @@ const data = await response.json();</code></pre>
             button.disabled = false;
         }
     }
-
 
     // Load live stats from API
     async function loadStats() {
@@ -862,32 +1054,136 @@ const data = await response.json();</code></pre>
     });
 
     // Fade-in animations
-        function setupScrollAnimations() {
-            const fadeElements = document.querySelectorAll('.fade-in-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -100px 0px'
+    function setupScrollAnimations() {
+        const fadeElements = document.querySelectorAll('.fade-in-section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
             });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        });
 
-            fadeElements.forEach(element => {
-                observer.observe(element);
+        fadeElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+
+    // ============================================================================
+    // ADMIN LOGIN MODAL FUNCTIONALITY
+    // ============================================================================
+    
+    // Triple-click to open admin login modal
+    let clickCount = 0;
+    let clickTimer = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const footerLogo = document.querySelector('footer img[alt="HelioAPI"]');
+        
+        if (footerLogo) {
+            footerLogo.style.cursor = 'default';
+            
+            footerLogo.addEventListener('click', () => {
+                clickCount++;
+                
+                if (clickCount === 3) {
+                    openAdminModal();
+                    clickCount = 0;
+                }
+                
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 800);
             });
         }
+    });
 
+    // Open admin modal
+    function openAdminModal() {
+        document.getElementById('adminLoginModal').style.display = 'flex';
+        document.getElementById('adminToken').focus();
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    // Close admin modal
+    function closeAdminModal() {
+        document.getElementById('adminLoginModal').style.display = 'none';
+        document.getElementById('adminToken').value = '';
+        document.getElementById('adminErrorMessage').classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAdminModal();
+        }
+    });
+
+    // Admin login form submission
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const token = document.getElementById('adminToken').value;
+            const errorDiv = document.getElementById('adminErrorMessage');
+            const loginBtn = document.getElementById('adminLoginBtn');
+            
+            // Clear previous errors
+            errorDiv.classList.remove('show');
+            
+            // Disable button
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Verifying...';
+            
+            try {
+                // Test the token by trying to access the dashboard
+                const response = await fetch(`${API_BASE}/admin/dashboard`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Store token in localStorage
+                    localStorage.setItem('helioAdminToken', token);
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'admin.html';
+                } else if (response.status === 403 || response.status === 401) {
+                    showAdminError('Invalid admin token. Please try again.');
+                } else {
+                    showAdminError('Authentication failed. Please check your connection.');
+                }
+            } catch (error) {
+                showAdminError('Network error. Please try again.');
+                console.error('Login error:', error);
+            } finally {
+                // Re-enable button
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Access Dashboard';
+            }
+        });
+    });
+
+    function showAdminError(message) {
+        const errorDiv = document.getElementById('adminErrorMessage');
+        errorDiv.textContent = message;
+        errorDiv.classList.add('show');
+    }
     
     // Initialize on page load
     window.addEventListener('load', () => {
         updateRegions();
         loadStats();
         setupScrollAnimations();
-        handleNavbarScroll(); // Check initial state
+        handleNavbarScroll();
     });
 
     // Handle scroll events
