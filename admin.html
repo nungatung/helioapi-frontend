@@ -384,7 +384,7 @@
     <script>
         const API_BASE = 'https://helioapi-production.up.railway.app';
         
-        // Get token from localStorage
+        
         const ADMIN_TOKEN = localStorage.getItem('helioAdminToken');
         
         const headers = {
@@ -394,7 +394,7 @@
         
         let currentApiKeyForTierUpdate = null;
         
-        // Logout function
+        
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.removeItem('helioAdminToken');
@@ -402,7 +402,7 @@
             }
         }
         
-        // Load dashboard stats
+        
         async function loadDashboard() {
             try {
                 const response = await fetch(`${API_BASE}/admin/dashboard`, { headers });
@@ -420,7 +420,7 @@
             }
         }
         
-        // Create API key
+        
         document.getElementById('createKeyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -457,10 +457,10 @@
                     `;
                     resultDiv.classList.remove('hidden');
                     
-                    // Reset form
+                   
                     document.getElementById('createKeyForm').reset();
                     
-                    // Reload dashboard
+                   
                     loadDashboard();
                     loadApiKeys();
                 } else {
@@ -516,7 +516,7 @@
             }
         }
         
-        // Open tier update modal
+        
         function openTierModal(apiKeyPreview, companyName, currentTier) {
             currentApiKeyForTierUpdate = apiKeyPreview;
             
@@ -532,21 +532,21 @@
                 </div>
             `;
             
-            // Set current tier as selected
+            
             document.getElementById('newTier').value = currentTier;
             document.getElementById('tierChangeReason').value = '';
             
             document.getElementById('tierModal').classList.remove('hidden');
         }
         
-        // Close tier modal
+      
         function closeTierModal() {
             document.getElementById('tierModal').classList.remove('hidden');
             document.getElementById('tierModal').classList.add('hidden');
             currentApiKeyForTierUpdate = null;
         }
         
-        // Confirm tier update
+        
         async function confirmTierUpdate() {
             const newTier = document.getElementById('newTier').value;
             const reason = document.getElementById('tierChangeReason').value;
@@ -586,7 +586,7 @@
             }
         }
         
-        // Deactivate API key (placeholder - needs backend endpoint)
+        // Deactivate API key 
         async function deactivateKey(apiKeyPreview) {
     const confirmed = confirm(
         `⚠️ Are you sure you want to deactivate this API key?\n\n` +
@@ -628,7 +628,7 @@
                 `Reason: ${data.reason}`
             );
             
-            // Reload the dashboard and key list
+            
             loadDashboard();
             loadApiKeys();
         } else {
@@ -647,7 +647,7 @@ function showError(message) {
     resultDiv.classList.remove('hidden');
 }
 
-// Load on page load
+
 window.addEventListener('load', () => {
     loadDashboard();
     loadApiKeys();
