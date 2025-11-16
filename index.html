@@ -537,20 +537,6 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <span class="text-2xl">📱</span>
-                            <div>
-                                <div class="text-sm text-gray-600">Smartphones Charged</div>
-                                <div class="text-xl font-bold text-helio-navy" id="result-phones">-</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-2xl">💻</span>
-                            <div>
-                                <div class="text-sm text-gray-600">Laptops Charged</div>
-                                <div class="text-xl font-bold text-helio-navy" id="result-laptops">-</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
                             <span class="text-2xl">💰</span>
                             <div>
                                 <div class="text-sm text-gray-600">Carbon Credit Value</div>
@@ -968,11 +954,7 @@ const data = await response.json();</code></pre>
                 document.getElementById('result-miles').textContent = 
                     `${Math.round(data.impact_equivalents.miles_driving_avoided).toLocaleString()} miles`;
                 document.getElementById('result-bottles').textContent = 
-                    `${Math.round(data.impact_equivalents.plastic_bottles_avoided).toLocaleString()} bottles`;
-                document.getElementById('result-phones').textContent = 
-                    `${Math.round(data.impact_equivalents.smartphones_charged).toLocaleString()} phones`;
-                document.getElementById('result-laptops').textContent = 
-                    `${Math.round(data.impact_equivalents.laptop_hours_powered).toLocaleString()} laptops`;        
+                    `${Math.round(data.impact_equivalents.plastic_bottles_avoided).toLocaleString()} bottles`;        
                 document.getElementById('result-value').textContent = 
                     `$${data.carbon_credit_value.low_estimate_usd} - $${data.carbon_credit_value.high_estimate_usd}`;
                 document.getElementById('result-source').textContent = 
@@ -1191,5 +1173,4 @@ const data = await response.json();</code></pre>
 </script>
 
 </body>
-
 </html>
