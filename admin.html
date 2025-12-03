@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelioAPI Admin Dashboard</title>
     
-    <link rel="icon" type="image/png" sizes="512x512" href="green-energy.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="green-energy. png">
     <link rel="icon" type="image/png" sizes="256x256" href="green-energy-256.png">
     <link rel="icon" type="image/png" sizes="128x128" href="green-energy-128.png">
     
@@ -67,6 +67,15 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 12px rgba(79, 179, 191, 0.2);
         }
+        
+        .modal-backdrop {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen">
@@ -78,7 +87,7 @@
                 🔆 API Key Dashboard
             </h1>
             <button onclick="logout()" 
-                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg w-full sm:w-auto">
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-2. 5 rounded-lg font-semibold transition-all hover:shadow-lg w-full sm:w-auto">
                 Logout
             </button>
         </div>
@@ -214,6 +223,74 @@
         </div>
     </div>
     
+    <!-- Rate Limit Modal -->
+    <div id="rateLimitModal" class="modal-backdrop hidden fixed inset-0 bg-helio-navy bg-opacity-80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border-2 border-helio-orange border-opacity-30">
+            <div class="p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-helio-navy mb-2">Custom Rate Limits</h2>
+                <p class="text-sm text-gray-600 mb-5">Enterprise tier only - Set custom rate limits for this customer</p>
+                
+                <div id="rateLimitModalContent" class="mb-5"></div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-helio-navy mb-2">
+                            Rate Limit:
+                            <span class="text-xs font-normal text-gray-500">(e.g., 1000/minute, 5000/hour)</span>
+                        </label>
+                        <input type="text" 
+                               id="customRateLimit" 
+                               placeholder="1000/minute"
+                               pattern="^\d+/(second|minute|hour|day)$"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-orange focus:outline-none transition">
+                        <p class="text-xs text-gray-500 mt-1">Format: number/unit (e.g., 2000/minute)</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-helio-navy mb-2">
+                            Burst Limit:
+                            <span class="text-xs font-normal text-gray-500">(e.g., 100/second, 200/second)</span>
+                        </label>
+                        <input type="text" 
+                               id="customBurstLimit" 
+                               placeholder="100/second"
+                               pattern="^\d+/(second|minute)$"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-orange focus:outline-none transition">
+                        <p class="text-xs text-gray-500 mt-1">Format: number/unit (e.g., 150/second)</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-helio-navy mb-2">Reason (optional):</label>
+                        <input type="text" 
+                               id="rateLimitReason" 
+                               placeholder="e.g., High volume production deployment"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-helio-orange focus:outline-none transition">
+                    </div>
+                    
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+                        <p class="text-sm text-blue-800">
+                            <strong>💡 Tip:</strong> Common values:<br>
+                            • Standard: 1000/minute, 100/second<br>
+                            • High Volume: 5000/minute, 500/second<br>
+                            • Very High: 10000/minute, 1000/second
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 mt-6">
+                    <button onclick="confirmRateLimitUpdate()" 
+                            class="w-full sm:flex-1 bg-helio-orange hover:bg-opacity-90 text-white px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg">
+                        Update Limits
+                    </button>
+                    <button onclick="closeRateLimitModal()" 
+                            class="w-full sm:flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         const API_BASE = 'https://helioapi-production.up.railway.app';
         const ADMIN_TOKEN = localStorage.getItem('helioAdminToken');
@@ -224,12 +301,13 @@
         };
         
         let currentApiKeyForTierUpdate = null;
+        let currentApiKeyForRateLimitUpdate = null;
         
         // Logout
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.removeItem('helioAdminToken');
-                window.location.href = 'index.html';
+                window.location. href = 'index.html';
             }
         }
         
@@ -240,11 +318,12 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    document.getElementById('totalKeys').textContent = data.summary.total_api_keys;
-                    document.getElementById('activeKeys').textContent = data.summary.active_keys;
+                    document.getElementById('totalKeys'). textContent = data.summary.total_api_keys;
+                    document. getElementById('activeKeys').textContent = data.summary.active_keys;
                     document.getElementById('starterCount').textContent = data.summary.keys_by_tier.starter || 0;
-                    document.getElementById('professionalCount').textContent = data.summary.keys_by_tier.professional || 0;
-                    document.getElementById('totalCalls').textContent = data.summary.total_calls_this_month.toLocaleString();
+                    document. getElementById('professionalCount').textContent = data.summary.keys_by_tier.professional || 0;
+                    document.getElementById('enterpriseCount').textContent = data. summary.keys_by_tier. enterprise || 0;
+                    document.getElementById('totalCalls'). textContent = data.summary.total_calls_this_month. toLocaleString();
                 }
             } catch (error) {
                 console.error('Error loading dashboard:', error);
@@ -255,7 +334,7 @@
         document.getElementById('createKeyForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const companyName = document.getElementById('companyName').value;
+            const companyName = document.getElementById('companyName'). value;
             const tier = document.getElementById('tier').value;
             const contactEmail = document.getElementById('contactEmail').value;
             const notes = document.getElementById('notes').value;
@@ -282,13 +361,15 @@
                         <div class="space-y-2 text-sm">
                             <p><strong>Company:</strong> ${data.company_name}</p>
                             <p><strong>Tier:</strong> <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase ${
-                                data.tier === 'starter' ? 'bg-helio-lime text-helio-navy' : 'bg-helio-teal text-white'
+                                data.tier === 'starter' ? 'bg-helio-lime text-helio-navy' : 
+                                data.tier === 'professional' ? 'bg-helio-teal text-white' : 
+                                'bg-helio-orange text-white'
                             }">${data.tier}</span></p>
                             <p class="font-semibold text-helio-navy">API Key:</p>
                             <code class="block bg-white p-3 rounded border border-gray-200 text-xs break-all">${data.api_key}</code>
                         </div>
                         <div class="bg-yellow-50 border-2 border-yellow-400 text-yellow-800 p-3 rounded-lg mt-4 text-sm">
-                            <strong>⚠️ Important:</strong> Save this API key now! It won't be shown again.
+                            <strong>⚠️ Important:</strong> Save this API key now!  It won't be shown again.
                         </div>
                     `;
                     resultDiv.classList.remove('hidden');
@@ -307,14 +388,18 @@
         // Load API Keys List
         async function loadApiKeys() {
             try {
-                const response = await fetch(`${API_BASE}/admin/api-keys/list?limit=50`, { headers });
+                const response = await fetch(`${API_BASE}/admin/api-keys/list? limit=50`, { headers });
                 const data = await response.json();
                 
                 const listDiv = document.getElementById('apiKeysList');
                 
                 if (data.success && data.api_keys.length > 0) {
                     listDiv.innerHTML = data.api_keys.map(key => `
-                        <div class="bg-gray-50 rounded-lg p-4 md:p-5 border-l-4 border-helio-teal hover:shadow-md transition-all">
+                        <div class="bg-gray-50 rounded-lg p-4 md:p-5 border-l-4 ${
+                            key.tier === 'starter' ? 'border-helio-lime' : 
+                            key.tier === 'professional' ? 'border-helio-teal' : 
+                            'border-helio-orange'
+                        } hover:shadow-md transition-all">
                             <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
                                 <div class="flex-1 min-w-0">
                                     <h3 class="text-lg font-bold text-helio-navy mb-2 break-words">${key.company_name}</h3>
@@ -329,14 +414,22 @@
                                         <p><strong>Calls This Month:</strong> ${(key.calls_this_month || 0).toLocaleString()}</p>
                                         ${key.contact_email ? `<p><strong>Email:</strong> ${key.contact_email}</p>` : ''}
                                         ${key.last_used_at ? `<p><strong>Last Used:</strong> ${new Date(key.last_used_at).toLocaleDateString()}</p>` : ''}
-                                        ${key.notes ? `<p><strong>Notes:</strong> ${key.notes.substring(0, 100)}${key.notes.length > 100 ? '...' : ''}</p>` : ''}
+                                        ${key.custom_rate_limit ? `<p><strong>Custom Rate Limit:</strong> <span class="text-helio-orange font-semibold">${key. custom_rate_limit}</span></p>` : ''}
+                                        ${key.custom_burst_limit ? `<p><strong>Custom Burst Limit:</strong> <span class="text-helio-orange font-semibold">${key.custom_burst_limit}</span></p>` : ''}
+                                        ${key.notes ? `<p><strong>Notes:</strong> ${key.notes. substring(0, 100)}${key.notes.length > 100 ? '...' : ''}</p>` : ''}
                                     </div>
                                 </div>
                                 <div class="flex flex-col sm:flex-row lg:flex-col gap-2 lg:flex-shrink-0">
-                                    <button onclick="openTierModal('${key.api_key_preview}', '${key.company_name.replace(/'/g, "\\'")}', '${key.tier}')" 
+                                    <button onclick="openTierModal('${key.api_key_preview}', '${key.company_name. replace(/'/g, "\\'")}', '${key. tier}')" 
                                             class="bg-helio-lime hover:bg-opacity-90 text-helio-navy px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-md whitespace-nowrap">
                                         Change Tier
                                     </button>
+                                    ${key.tier === 'enterprise' ? `
+                                        <button onclick="openRateLimitModal('${key.api_key_preview}', '${key. company_name.replace(/'/g, "\\'")}', '${key.custom_rate_limit || 'default'}', '${key.custom_burst_limit || 'default'}')" 
+                                                class="bg-helio-orange hover:bg-opacity-90 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-md whitespace-nowrap">
+                                            Custom Limits
+                                        </button>
+                                    ` : ''}
                                     <button onclick="deactivateKey('${key.api_key_preview}')" 
                                             class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-md whitespace-nowrap">
                                         Deactivate
@@ -346,7 +439,7 @@
                         </div>
                     `).join('');
                 } else {
-                    listDiv.innerHTML = '<p class="text-gray-500 text-center py-8">No API keys found.</p>';
+                    listDiv. innerHTML = '<p class="text-gray-500 text-center py-8">No API keys found. </p>';
                 }
             } catch (error) {
                 console.error('Error loading API keys:', error);
@@ -373,20 +466,20 @@
                 </div>
             `;
             
-            document.getElementById('newTier').value = currentTier;
+            document. getElementById('newTier').value = currentTier;
             document.getElementById('tierChangeReason').value = '';
             document.getElementById('tierModal').classList.remove('hidden');
         }
         
         // Close Tier Modal
         function closeTierModal() {
-            document.getElementById('tierModal').classList.add('hidden');
+            document. getElementById('tierModal').classList.add('hidden');
             currentApiKeyForTierUpdate = null;
         }
         
         // Confirm Tier Update
         async function confirmTierUpdate() {
-            const newTier = document.getElementById('newTier').value;
+            const newTier = document. getElementById('newTier').value;
             const reason = document.getElementById('tierChangeReason').value;
             
             if (!currentApiKeyForTierUpdate) {
@@ -401,14 +494,14 @@
                 if (reason) params.append('reason', reason);
                 
                 const response = await fetch(
-                    `${API_BASE}/admin/api-keys/preview/${currentApiKeyForTierUpdate}/update-tier?${params}`,
+                    `${API_BASE}/admin/api-keys/preview/${currentApiKeyForTierUpdate}/update-tier? ${params}`,
                     {
                         method: 'PUT',
                         headers
                     }
                 );
                 
-                const data = await response.json();
+                const data = await response. json();
                 
                 if (data.success) {
                     alert(`✅ Tier Updated Successfully!\n\nCompany: ${data.company_name}\nChange: ${data.old_tier} → ${data.new_tier}`);
@@ -423,12 +516,123 @@
             }
         }
         
+        // Open Rate Limit Modal
+        function openRateLimitModal(apiKeyPreview, companyName, currentRateLimit, currentBurstLimit) {
+            currentApiKeyForRateLimitUpdate = apiKeyPreview;
+            
+            // Parse current limits
+            const rateDisplay = currentRateLimit && currentRateLimit !== 'default' && currentRateLimit !== 'null' 
+                ? currentRateLimit 
+                : '1000/minute (default)';
+            const burstDisplay = currentBurstLimit && currentBurstLimit !== 'default' && currentBurstLimit !== 'null'
+                ? currentBurstLimit 
+                : '100/second (default)';
+            
+            document.getElementById('rateLimitModalContent').innerHTML = `
+                <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-helio-orange">
+                    <p class="mb-2"><strong class="text-helio-navy">Company:</strong> ${companyName}</p>
+                    <p class="mb-2"><strong class="text-helio-navy">Tier:</strong> 
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase ml-2 bg-helio-orange text-white">
+                            ENTERPRISE
+                        </span>
+                    </p>
+                    <p class="mb-1"><strong class="text-helio-navy">Current Rate Limit:</strong> ${rateDisplay}</p>
+                    <p><strong class="text-helio-navy">Current Burst Limit:</strong> ${burstDisplay}</p>
+                </div>
+            `;
+            
+            // Pre-fill with current values if they exist
+            if (currentRateLimit && currentRateLimit !== 'default' && currentRateLimit !== 'null') {
+                document.getElementById('customRateLimit').value = currentRateLimit;
+            } else {
+                document.getElementById('customRateLimit').value = '1000/minute';
+            }
+            
+            if (currentBurstLimit && currentBurstLimit !== 'default' && currentBurstLimit !== 'null') {
+                document.getElementById('customBurstLimit').value = currentBurstLimit;
+            } else {
+                document.getElementById('customBurstLimit').value = '100/second';
+            }
+            
+            document.getElementById('rateLimitReason').value = '';
+            document.getElementById('rateLimitModal'). classList.remove('hidden');
+        }
+        
+        // Close Rate Limit Modal
+        function closeRateLimitModal() {
+            document.getElementById('rateLimitModal').classList.add('hidden');
+            currentApiKeyForRateLimitUpdate = null;
+        }
+        
+        // Validate rate limit format
+        function validateRateLimitFormat(limit) {
+            const pattern = /^\d+\/(second|minute|hour|day)$/;
+            return pattern.test(limit);
+        }
+        
+        // Confirm Rate Limit Update
+        async function confirmRateLimitUpdate() {
+            const rateLimit = document.getElementById('customRateLimit').value. trim();
+            const burstLimit = document.getElementById('customBurstLimit').value.trim();
+            const reason = document.getElementById('rateLimitReason').value;
+            
+            if (!currentApiKeyForRateLimitUpdate) {
+                alert('Error: No API key selected');
+                return;
+            }
+            
+            // Validate formats
+            if (!validateRateLimitFormat(rateLimit)) {
+                alert('❌ Invalid rate limit format.\nUse format: number/unit\nExamples: 1000/minute, 5000/hour');
+                return;
+            }
+            
+            if (!validateRateLimitFormat(burstLimit)) {
+                alert('❌ Invalid burst limit format.\nUse format: number/unit\nExamples: 100/second, 200/second');
+                return;
+            }
+            
+            try {
+                const params = new URLSearchParams({
+                    rate_limit: rateLimit,
+                    burst_limit: burstLimit
+                });
+                if (reason) params.append('reason', reason);
+                
+                const response = await fetch(
+                    `${API_BASE}/admin/api-keys/preview/${currentApiKeyForRateLimitUpdate}/set-custom-rate-limits?${params}`,
+                    {
+                        method: 'PUT',
+                        headers
+                    }
+                );
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(
+                        `✅ Rate Limits Updated Successfully!\n\n` +
+                        `Company: ${data.company_name}\n` +
+                        `Rate Limit: ${data.rate_limit}\n` +
+                        `Burst Limit: ${data.burst_limit}\n` +
+                        (reason ? `Reason: ${reason}` : '')
+                    );
+                    closeRateLimitModal();
+                    loadApiKeys();
+                } else {
+                    alert('❌ Failed to update rate limits: ' + (data.error || data.detail || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('❌ Network error: ' + error.message);
+            }
+        }
+        
         // Deactivate API Key
         async function deactivateKey(apiKeyPreview) {
             const confirmed = confirm(
                 `⚠️ Are you sure you want to deactivate this API key?\n\n` +
                 `Key: ${apiKeyPreview}\n\n` +
-                `This will immediately stop all API requests.`
+                `This will immediately stop all API requests. `
             );
 
             if (!confirmed) return;
@@ -440,7 +644,7 @@
 
             try {
                 const params = new URLSearchParams();
-                if (reason) params.append('reason', reason);
+                if (reason) params. append('reason', reason);
             
                 const response = await fetch(
                     `${API_BASE}/admin/api-keys/preview/${apiKeyPreview}/deactivate?${params}`,
@@ -450,7 +654,7 @@
                     }
                 );
             
-                const data = await response.json();
+                const data = await response. json();
             
                 if (response.ok && data.success) {
                     alert(
@@ -472,8 +676,18 @@
             const resultDiv = document.getElementById('createResult');
             resultDiv.className = 'bg-red-50 border-2 border-red-400 text-red-800 rounded-lg p-4 text-sm font-medium';
             resultDiv.textContent = message;
-            resultDiv.classList.remove('hidden');
+            resultDiv. classList.remove('hidden');
         }
+        
+        // Close modals when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'tierModal') {
+                closeTierModal();
+            }
+            if (e.target. id === 'rateLimitModal') {
+                closeRateLimitModal();
+            }
+        });
 
         // Initialize
         window.addEventListener('load', () => {
