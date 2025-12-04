@@ -1239,7 +1239,7 @@ const data = await response.json();</code></pre>
                 if (data.global_coverage) {
                     document.getElementById('stat-continents').textContent = data.global_coverage.continents || 6;
                     document.getElementById('stat-countries').textContent = data.global_coverage.countries || 110;
-                    document.getElementById('stat-records').textContent = data.global_coverage.total_records || 177;
+                    document.getElementById('stat-records').textContent = data.global_coverage.total_records || 179;
                     document.getElementById('stat-range').textContent = data.global_coverage.factor_range || 'Loading...';
                 }
             } catch (error) {
@@ -1442,71 +1442,62 @@ const data = await response.json();</code></pre>
             const minute = now.getMinutes();
             const timeDecimal = hour + minute / 60;
 
-            // Solar generation curve (peak at noon, zero at night)
             let generationFactor = 0;
-            
-            // FOR DEMO: If it's nighttime, simulate as if it's daytime (noon)
-            // This ensures the demo always shows activity
+      
             let simulatedTime = timeDecimal;
             
             if (timeDecimal < 6 || timeDecimal > 18) {
-                // It's nighttime - simulate peak solar (noon = 12.0)
                 simulatedTime = 12.0;
                 console.log('⚠️ Nighttime detected - simulating peak solar for demo');
             }
             
             if (simulatedTime >= 6 && simulatedTime <= 18) {
-                // Sine wave for realistic solar curve
                 const solarAngle = ((simulatedTime - 6) / 12) * Math.PI;
                 generationFactor = Math.sin(solarAngle);
             }
 
-            // Add some randomness for clouds/weather (±15%)
+         
             const randomness = 0.85 + Math.random() * 0.3;
             generationFactor *= randomness;
 
-            // Ensure minimum generation of 10% during "daytime simulation"
+           
             if (generationFactor < 0.1 && (simulatedTime >= 6 && simulatedTime <= 18)) {
                 generationFactor = 0.1 + Math.random() * 0.2; // 10-30% minimum
             }
 
-            // Calculate current power (kW)
             currentPower = systemSize * generationFactor;
             
             console.log(`🔆 Time: ${hour}:${minute}, Factor: ${generationFactor.toFixed(3)}, Power: ${currentPower.toFixed(2)} kW`);
             
-            // Update peak power
+           
             if (currentPower > peakPower) {
                 peakPower = currentPower;
             }
 
-            // Calculate energy generated this second (kWh)
-            const energyThisSecond = currentPower / 3600; // Convert to kWh per second
+          
+            const energyThisSecond = currentPower / 3600;
             totalEnergyGenerated += energyThisSecond;
-
-            // Calculate CO2 avoided
             totalCO2Avoided = totalEnergyGenerated * currentEmissionFactor;
 
-            // Calculate annual projection (only if we have runtime data)
             let annualCO2 = 0;
             if (simulationStartTime && (Date.now() - simulationStartTime) > 1000) {
                 annualCO2 = totalCO2Avoided * (365 * 24 * 3600) / ((Date.now() - simulationStartTime) / 1000);
             }
 
-            // Calculate equivalents (using standard conversion factors)
+           
             const treesPlanted = Math.round(totalCO2Avoided * 0.06); // 1 tree absorbs ~16.5 kg CO2/year
             const milesAvoided = Math.round(totalCO2Avoided * 2.47); // 1 kg CO2 = 2.47 miles
             const flightHours = Math.round(totalCO2Avoided * 0.0044); // ~227 kg CO2 per flight hour
             const bottlesAvoided = Math.round(totalCO2Avoided * 11.9); // ~0.084 kg CO2 per 500ml bottle
             const creditValue = (totalCO2Avoided * 0.025).toFixed(2); // $15-35 per ton, using $25/ton avg
 
-            // Update runtime
+           
             const runtime = Date.now() - simulationStartTime;
             const hours = Math.floor(runtime / 3600000);
             const minutes = Math.floor((runtime % 3600000) / 60000);
             const seconds = Math.floor((runtime % 60000) / 1000);
 
-            // Update UI
+       
             document.getElementById('sim-current-power').textContent = `${currentPower.toFixed(2)} kW`;
             document.getElementById('sim-total-energy').textContent = `${totalEnergyGenerated.toFixed(3)} kWh`;
             document.getElementById('sim-co2-avoided').textContent = `${totalCO2Avoided.toFixed(3)} kg`;
@@ -1520,7 +1511,7 @@ const data = await response.json();</code></pre>
                 `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             document.getElementById('sim-peak-power').textContent = `${peakPower.toFixed(2)} kW`;
 
-            // Update flow bars (0-100% based on system size)
+   
             const powerPercentage = Math.min(100, (currentPower / systemSize) * 100);
             document.getElementById('solar-flow').style.width = `${powerPercentage}%`;
             document.getElementById('co2-flow').style.width = `${powerPercentage}%`;
@@ -1593,7 +1584,7 @@ const data = await response.json();</code></pre>
                     document.getElementById('result-trees').textContent = 
                         `${Math.round(data.impact_equivalents.trees_planted_equivalent).toLocaleString()} trees`;
                     document.getElementById('result-passenger').textContent = 
-                        `${Math.round(data.impact_equivalents.passenger_flights_avoided).toLocaleString()} hours`;  
+                        `${Math.round(data.impact_equivalents.passenger_flight_hours_avoided).toLocaleString()} hours`;  
                     document.getElementById('result-miles').textContent = 
                         `${Math.round(data.impact_equivalents.miles_driving_avoided).toLocaleString()} miles`;
                     document.getElementById('result-bottles').textContent = 
@@ -1729,5 +1720,4 @@ const data = await response.json();</code></pre>
     </script>
 
 </body>
-
 </html>
